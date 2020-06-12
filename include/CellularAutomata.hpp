@@ -15,6 +15,9 @@
 #include <chrono>
 #include <algorithm>
 
+#define CDEAD_CELL sf::Color(100, 100, 100)
+#define CLIVE_CELL sf::Color(225, 225, 225)
+
 class CellularAutomata : public sf::Drawable {
 public:
     enum class StateCell : char {
@@ -28,20 +31,20 @@ public:
     };
 public:
     CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size);
-    ~CellularAutomata();
+    ~CellularAutomata() = default;
     void invertCellState(int xRelative, int yRelativ);
     void update();
-    void handleEvent(const sf::Event &event, const sf::Vector2i &posMouse);
+    void handleEvent(const sf::Event &event);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 private:
-    StateCell getStateCell(int x, int y) const;
+    const StateCell &getStateCell(int x, int y) const;
     void setStateCell(int x, int y, const StateCell &state);
     int getNbNeighborsLiving(int x, int y);
-    StateCell getNeighbor(int x, int y, int xAdd, int yAdd);
+    StateCell getNeighbor(int x, int y, int xAdd, int yAdd) const;
 private:
-    StateCell _actual_cells_states;
-    StateCell **_last_cells_states;
-    std::vector<sf::RectangleShape> _cells;
+    sf::Clock _clockUpdate;
+    double _msUpdate{500};
+    std::vector<StateCell> _actual_cells_states;
     sf::Vector2u _screenSize;
     sf::Vector2u _size;
     sf::Vector2f _sizeCell;
