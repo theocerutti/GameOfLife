@@ -36,6 +36,7 @@ public:
     void update();
     void handleEvent(const sf::Event &event);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void setMsUpdate(double ms);
 private:
     const StateCell &getStateCell(int x, int y) const;
     void setStateCell(int x, int y, const StateCell &state);

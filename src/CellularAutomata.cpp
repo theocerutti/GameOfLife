@@ -20,12 +20,34 @@ CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vec
 
 void CellularAutomata::handleEvent(const sf::Event &event)
 {
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _state == AutomataState::Editing) {
-        invertCellState(std::floor(event.mouseButton.x / _sizeCell.x), std::floor(event.mouseButton.y / _sizeCell.y));
+    static sf::Vector2i posMouse;
+    static bool hold = false;
+
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+        hold = false;
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        posMouse.x = event.mouseButton.x;
+        posMouse.y = event.mouseButton.y;
+        hold = true;
+    }
+    if (event.type == sf::Event::MouseMoved && hold) {
+        posMouse.x = event.mouseMove.x;
+        posMouse.y = event.mouseMove.y;
+    }
+
+    if (hold && _state == AutomataState::Editing) {
+        invertCellState(std::floor(posMouse.x / _sizeCell.x), std::floor(posMouse.y / _sizeCell.y));
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::P) {
         _state = AutomataState::Processing;
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::E) {
         _state = AutomataState::Editing;
+    } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::C) {
+        _state = AutomataState::Editing;
+        std::fill(_actual_cells_states.begin(), _actual_cells_states.end(), StateCell::Dead);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+        setMsUpdate(_msUpdate - 1);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        setMsUpdate(_msUpdate + 1);
     }
 }
 
@@ -99,8 +121,14 @@ CellularAutomata::StateCell CellularAutomata::getNeighbor(int xCell, int yCell, 
 void CellularAutomata::invertCellState(int xRelative, int yRelativ)
 {
     if (xRelative >= 0 && yRelativ >= 0 && xRelative + (yRelativ * _size.y) < _size.x * _size.y) {
-        StateCell cellState = _actual_cells_states.at(xRelative + (yRelativ * _size.y));
-
+        const StateCell &cellState = _actual_cells_states.at(xRelative + (yRelativ * _size.y));
         _actual_cells_states.at(xRelative + (yRelativ * _size.y)) = cellState == StateCell::Live ? StateCell::Dead : StateCell::Live;
     }
+}
+
+void CellularAutomata::setMsUpdate(double ms)
+{
+    _msUpdate = ms;
+    if (_msUpdate < 0)
+        _msUpdate = 0;
 }

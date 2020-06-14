@@ -4,8 +4,8 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "GameOfLife");
-    CellularAutomata cellularAutomata(window.getSize(), sf::Vector2u(50, 50));
+    sf::RenderWindow window(sf::VideoMode(800, 800), "GameOfLife", sf::Style::Titlebar | sf::Style::Close);
+    CellularAutomata cellularAutomata(window.getSize(), sf::Vector2u(100, 100));
 
     while (window.isOpen()) {
         sf::Event event{};
