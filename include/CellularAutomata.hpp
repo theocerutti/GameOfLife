@@ -10,6 +10,8 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "CellularArray.hpp"
+#include "AssetManager.hpp"
 #include <cstring>
 #include <thread>
 #include <chrono>
@@ -18,38 +20,21 @@
 #define CDEAD_CELL sf::Color(100, 100, 100)
 #define CLIVE_CELL sf::Color(225, 225, 225)
 
+enum class AutomataState : char {
+    Editing,
+    Processing
+};
+
 class CellularAutomata : public sf::Drawable {
 public:
-    enum class StateCell : char {
-        Live,
-        Dead
-    };
-
-    enum class AutomataState : char {
-        Editing,
-        Processing
-    };
-public:
     CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size);
-    ~CellularAutomata() = default;
-    void invertCellState(int xRelative, int yRelativ);
-    void update();
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void handleEvent(const sf::Event &event);
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-    void setMsUpdate(double ms);
+    void update(double dt);
 private:
-    const StateCell &getStateCell(int x, int y) const;
-    void setStateCell(int x, int y, const StateCell &state);
-    int getNbNeighborsLiving(int x, int y);
-    StateCell getNeighbor(int x, int y, int xAdd, int yAdd) const;
-private:
-    sf::Clock _clockUpdate;
-    double _msUpdate{500};
-    std::vector<StateCell> _actual_cells_states;
-    sf::Vector2u _screenSize;
-    sf::Vector2u _size;
-    sf::Vector2f _sizeCell;
-    AutomataState _state{AutomataState::Editing};
+    CellularArray _cellular;
+    sf::Text _info;
 };
+
 
 #endif //GAMEOFLIFE_CELLULARAUTOMATA_HPP

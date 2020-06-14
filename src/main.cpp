@@ -4,6 +4,8 @@
 
 int main()
 {
+    sf::Clock deltaClock;
+    double deltaTime = 0;
     sf::RenderWindow window(sf::VideoMode(800, 800), "GameOfLife", sf::Style::Titlebar | sf::Style::Close);
     CellularAutomata cellularAutomata(window.getSize(), sf::Vector2u(100, 100));
 
@@ -15,9 +17,10 @@ int main()
             cellularAutomata.handleEvent(event);
         }
         window.clear();
-        cellularAutomata.update();
+        cellularAutomata.update(deltaTime);
         window.draw(cellularAutomata);
         window.display();
+        deltaTime = deltaClock.restart().asMilliseconds();
     }
     return (0);
 }
