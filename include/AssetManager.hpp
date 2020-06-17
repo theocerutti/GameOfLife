@@ -25,8 +25,7 @@ public:
      *
      *  /!\ Please assign the return value into a shared_ptr<T> or the cleanCache wont work properly
      */
-    template<typename T>
-    std::shared_ptr<T> load(const std::string &path) // TODO: do it with textures, sounds...
+    std::shared_ptr<sf::Font> loadFont(const std::string &path)
     {
         AssetHash hash = getHashFromPath(path);
 
@@ -37,6 +36,20 @@ public:
             return (newFont);
         } else {
             return (_fontsCache.at(hash));
+        }
+    }
+
+    std::shared_ptr<sf::Texture> loadTexture(const std::string &path)
+    {
+        AssetHash hash = getHashFromPath(path);
+
+        if (_fontsCache.find(hash) == _fontsCache.end()) {
+            std::shared_ptr<sf::Texture> newTexture = std::make_shared<sf::Texture>();
+            newTexture->loadFromFile(path);
+            _texturesCache.insert({hash, newTexture});
+            return (newTexture);
+        } else {
+            return (_texturesCache.at(hash));
         }
     }
 
@@ -63,6 +76,7 @@ private:
     AssetHash getHashFromPath(const std::string &path);
 private:
     std::unordered_map<AssetHash, std::shared_ptr<sf::Font>> _fontsCache;
+    std::unordered_map<AssetHash, std::shared_ptr<sf::Texture>> _texturesCache;
 };
 
 #endif //GAMEOFLIFE_ASSETMANAGER_HPP
