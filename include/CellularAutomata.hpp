@@ -8,14 +8,10 @@
 #ifndef GAMEOFLIFE_CELLULARAUTOMATA_HPP
 #define GAMEOFLIFE_CELLULARAUTOMATA_HPP
 
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 #include "CellularArray.hpp"
 #include "AssetManager.hpp"
-#include <cstring>
-#include <thread>
-#include <chrono>
-#include <algorithm>
+#include "Button.hpp"
+#include "Slidebar.hpp"
 
 #define CDEAD_CELL sf::Color(100, 100, 100)
 #define CLIVE_CELL sf::Color(225, 225, 225)
@@ -33,7 +29,10 @@ public:
     void update(double dt);
 private:
     CellularArray _cellular;
-    sf::Text _info;
+    sf::Text _infoNbLiving;
+    sf::Text _infoSizeMap;
+    Button _buttonMode;
+    Slidebar _slideSpeed;
 };
 
 

@@ -32,7 +32,7 @@ public:
 public:
     CellularArray(const sf::Vector2u &screenSize, const sf::Vector2u &size);
     void invertCellState(int xRelative, int yRelativ);
-    void update();
+    void update(double dt);
     void handleEvent(const sf::Event &event);
     void setMsUpdate(double ms);
     double getMsUpdate() const;

@@ -52,7 +52,7 @@ void CellularArray::handleEvent(const sf::Event &event)
     }
 }
 
-void CellularArray::update()
+void CellularArray::update(double dt)
 {
     if (_state == AutomataState::Processing && _clockUpdate.getElapsedTime().asMilliseconds() > _msUpdate) {
         std::vector<std::tuple<int, int, StateCell>> states;

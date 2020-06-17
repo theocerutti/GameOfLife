@@ -7,11 +7,15 @@
 
 #include "CellularAutomata.hpp"
 
-CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size) : _cellular(screenSize, size)
+CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size)
+    : _cellular(screenSize, size),
+      _buttonMode(sf::Vector2f(100, 100), "media/images/start.png")
 {
-    std::shared_ptr<sf::Font> font = AssetManager::get().load<sf::Font>("media/fonts/monofonto.ttf");
+    std::shared_ptr<sf::Font> font = AssetManager::get().loadFont("media/fonts/monofonto.ttf");
 
-    _info = sf::Text("Living Cells: " + std::to_string(_cellular.getNbLivingCells()), *font);
+    _infoNbLiving = sf::Text("Living Cells: " + std::to_string(_cellular.getNbLivingCells()), *font);
+    _infoSizeMap = sf::Text("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y), *font);
+    _infoSizeMap.setPosition(0, 50);
 }
 
 void CellularAutomata::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -25,19 +29,26 @@ void CellularAutomata::draw(sf::RenderTarget &target, sf::RenderStates states) c
             sf::RectangleShape shape(sizeCell);
             shape.setPosition(sf::Vector2f(x * sizeCell.x, y * sizeCell.y));
             shape.setFillColor(cells.at(x + (y * size.y)) == CellularArray::StateCell::Live ? CLIVE_CELL : CDEAD_CELL);
+            shape.setOutlineColor(sf::Color::Black);
+            shape.setOutlineThickness(-0.5);
             target.draw(shape);
         }
     }
-    target.draw(_info);
+    target.draw(_infoNbLiving);
+    target.draw(_infoSizeMap);
+    target.draw(_buttonMode);
 }
 
 void CellularAutomata::handleEvent(const sf::Event &event)
 {
     _cellular.handleEvent(event);
+    _buttonMode.handleEvent(event);
 }
 
 void CellularAutomata::update(double dt)
 {
-    _cellular.update();
-    _info.setString("Living Cells: " + std::to_string(_cellular.getNbLivingCells()));
+    _cellular.update(dt);
+    _buttonMode.update(dt);
+    _infoNbLiving.setString("Living Cells: " + std::to_string(_cellular.getNbLivingCells()));
+    _infoSizeMap.setString("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y));
 }
