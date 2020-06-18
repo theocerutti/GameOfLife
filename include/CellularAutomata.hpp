@@ -11,7 +11,7 @@
 #include "CellularArray.hpp"
 #include "AssetManager.hpp"
 #include "ButtonMode.hpp"
-#include "Slidebar.hpp"
+#include "SpeedSlider.hpp"
 
 #define CDEAD_CELL sf::Color(100, 100, 100)
 #define CLIVE_CELL sf::Color(225, 225, 225)
@@ -36,7 +36,7 @@ private:
     sf::Text _infoNbLiving;
     sf::Text _infoSizeMap;
     ButtonMode _buttonMode;
-    Slidebar _slideSpeed;
+    SpeedSlider _slideSpeed;
     AutomataState _state{AutomataState::Editing};
     sf::Clock _clockUpdate;
     double _msUpdate{500};
