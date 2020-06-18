@@ -31,9 +31,12 @@ public:
 
         if (_fontsCache.find(hash) == _fontsCache.end()) {
             std::shared_ptr<sf::Font> newFont = std::make_shared<sf::Font>();
-            newFont->loadFromFile(path);
-            _fontsCache.insert({hash, newFont});
-            return (newFont);
+            if (newFont->loadFromFile(path)) {
+                _fontsCache.insert({hash, newFont});
+                return (newFont);
+            } else {
+                return (nullptr);
+            }
         } else {
             return (_fontsCache.at(hash));
         }
@@ -43,11 +46,14 @@ public:
     {
         AssetHash hash = getHashFromPath(path);
 
-        if (_fontsCache.find(hash) == _fontsCache.end()) {
+        if (_texturesCache.find(hash) == _texturesCache.end()) {
             std::shared_ptr<sf::Texture> newTexture = std::make_shared<sf::Texture>();
-            newTexture->loadFromFile(path);
-            _texturesCache.insert({hash, newTexture});
-            return (newTexture);
+            if (newTexture->loadFromFile(path)) {
+                _texturesCache.insert({hash, newTexture});
+                return (newTexture);
+            } else {
+                return (nullptr);
+            }
         } else {
             return (_texturesCache.at(hash));
         }

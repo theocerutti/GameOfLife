@@ -9,13 +9,16 @@
 
 CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size)
     : _cellular(screenSize, size),
-      _buttonMode(sf::Vector2f(100, 100), "media/images/start.png")
+      _buttonMode(sf::Vector2f(0, 0))
 {
     std::shared_ptr<sf::Font> font = AssetManager::get().loadFont("media/fonts/monofonto.ttf");
 
     _infoNbLiving = sf::Text("Living Cells: " + std::to_string(_cellular.getNbLivingCells()), *font);
     _infoSizeMap = sf::Text("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y), *font);
     _infoSizeMap.setPosition(0, 50);
+
+    _buttonMode.setScale(0.25, 0.25);
+    _buttonMode.setPosition(screenSize.x - _buttonMode.getGlobalBounds().width - 20, screenSize.y - _buttonMode.getGlobalBounds().height - 20);
 }
 
 void CellularAutomata::draw(sf::RenderTarget &target, sf::RenderStates states) const

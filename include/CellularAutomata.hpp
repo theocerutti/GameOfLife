@@ -10,7 +10,7 @@
 
 #include "CellularArray.hpp"
 #include "AssetManager.hpp"
-#include "Button.hpp"
+#include "ButtonMode.hpp"
 #include "Slidebar.hpp"
 
 #define CDEAD_CELL sf::Color(100, 100, 100)
@@ -31,7 +31,7 @@ private:
     CellularArray _cellular;
     sf::Text _infoNbLiving;
     sf::Text _infoSizeMap;
-    Button _buttonMode;
+    ButtonMode _buttonMode;
     Slidebar _slideSpeed;
 };
 

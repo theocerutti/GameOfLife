@@ -5,16 +5,16 @@
 **
 */
 
-#ifndef GAMEOFLIFE_BUTTON_HPP
-#define GAMEOFLIFE_BUTTON_HPP
+#ifndef GAMEOFLIFE_BASEBUTTON_HPP
+#define GAMEOFLIFE_BASEBUTTON_HPP
 
 #include <SFML/Graphics.hpp>
-#include <AssetManager.hpp>
-#include <Math.hpp>
 #include <functional>
 #include <memory>
+#include "AssetManager.hpp"
+#include "Math.hpp"
 
-class Button : public sf::Drawable, public sf::Transformable {
+class BaseButton : public sf::Drawable, public sf::Transformable {
 public:
     enum class State {
         Idle,
@@ -23,20 +23,22 @@ public:
         Hovered
     };
 public:
-    Button(const sf::Vector2f &pos, const std::string &texturePath, const std::function<void()> &callback = nullptr);
+    BaseButton() = default;
+    BaseButton(const sf::Vector2f &pos, sf::Texture *texture);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void update(double dt);
     void handleEvent(const sf::Event &event);
-    void onClick();
+    virtual void onClick() = 0;
+    void setTexture(sf::Texture *texture);
+    const sf::Texture *getTexture() const;
     sf::Rect<float> getLocalBounds() const;
     sf::Rect<float> getGlobalBounds() const;
 private:
-    const std::shared_ptr<sf::Texture> _texture;
+    sf::Texture *_texture{nullptr};
     sf::RectangleShape _shape;
     State _state;
-    std::function<void()> _callback;
     double _fadeValue{0};
     double _fadeSpeed{0.003};
 };
 
-#endif //GAMEOFLIFE_BUTTON_HPP
+#endif //GAMEOFLIFE_BASEBUTTON_HPP
