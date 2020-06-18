@@ -17,7 +17,7 @@ CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vec
     _infoSizeMap = sf::Text("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y), *font);
     _infoSizeMap.setPosition(0, 50);
 
-    _buttonMode.setScale(0.25, 0.25);
+    _buttonMode.setScale(0.2f, 0.2f);
     _buttonMode.setPosition(screenSize.x - _buttonMode.getGlobalBounds().width - 20, screenSize.y - _buttonMode.getGlobalBounds().height - 20);
 
     _clockUpdate.restart();
@@ -42,6 +42,7 @@ void CellularAutomata::draw(sf::RenderTarget &target, sf::RenderStates states) c
     target.draw(_infoNbLiving);
     target.draw(_infoSizeMap);
     target.draw(_buttonMode);
+    target.draw(_sliderSpeed);
 }
 
 void CellularAutomata::handleEvent(const sf::Event &event)
@@ -92,7 +93,7 @@ void CellularAutomata::update(double dt)
     _infoSizeMap.setString("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y));
 }
 
-const AutomataState &CellularAutomata::getState() const
+AutomataState CellularAutomata::getState() const
 {
     return (_state);
 }

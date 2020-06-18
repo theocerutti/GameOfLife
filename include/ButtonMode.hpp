@@ -11,7 +11,7 @@
 #include "BaseButton.hpp"
 
 class CellularAutomata;
-enum class AutomataState : char;
+enum class AutomataState;
 
 class ButtonMode : public BaseButton {
 public:

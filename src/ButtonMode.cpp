@@ -15,7 +15,7 @@ ButtonMode::ButtonMode(CellularAutomata &cellularAutomata, const sf::Vector2f &p
       _cellularAutomata(cellularAutomata)
 {
     setPosition(pos);
-    setTextureFromState(cellularAutomata.getState());
+    setTextureFromState(AutomataState::Editing);
 }
 
 void ButtonMode::onClick()
@@ -23,7 +23,7 @@ void ButtonMode::onClick()
     if (getTexture() == _startTexture.get()) {
         setEditingTexture();
         _cellularAutomata.setState(AutomataState::Processing);
-    } else {
+    } else if (getTexture() == _editTexture.get()) {
         setStartTexture();
         _cellularAutomata.setState(AutomataState::Editing);
     }
@@ -43,7 +43,7 @@ void ButtonMode::setTextureFromState(const AutomataState &state)
 {
     if (state == AutomataState::Editing) {
         setStartTexture();
-    } else {
+    } else if (state == AutomataState::Processing) {
         setEditingTexture();
     }
 }

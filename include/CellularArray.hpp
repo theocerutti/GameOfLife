@@ -20,9 +20,9 @@
 
 class CellularArray {
 public:
-    enum class StateCell : char {
-        Live,
-        Dead
+    enum class StateCell {
+        Live = 0,
+        Dead = 1
     };
 public:
     CellularArray(const sf::Vector2u &screenSize, const sf::Vector2u &size);

@@ -63,8 +63,8 @@ sf::Rect<float> BaseButton::getGlobalBounds() const
 void BaseButton::setTexture(sf::Texture *texture)
 {
     _texture = texture;
-    _shape.setTexture(_texture);
-    _shape.setSize(sf::Vector2f(_texture->getSize().x, _texture->getSize().y));
+    _shape.setTexture(texture);
+    _shape.setSize(sf::Vector2f(texture->getSize().x, texture->getSize().y));
 }
 
 const sf::Texture *BaseButton::getTexture() const

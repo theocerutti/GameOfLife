@@ -16,9 +16,9 @@
 #define CDEAD_CELL sf::Color(100, 100, 100)
 #define CLIVE_CELL sf::Color(225, 225, 225)
 
-enum class AutomataState : char {
-    Editing,
-    Processing
+enum class AutomataState {
+    Editing = 0,
+    Processing = 1
 };
 
 class CellularAutomata : public sf::Drawable {
@@ -27,7 +27,7 @@ public:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void handleEvent(const sf::Event &event);
     void update(double dt);
-    const AutomataState &getState() const;
+    AutomataState getState() const;
     void setState(const AutomataState &state);
     void setMsUpdate(double ms);
     double getMsUpdate() const;
@@ -36,7 +36,7 @@ private:
     sf::Text _infoNbLiving;
     sf::Text _infoSizeMap;
     ButtonMode _buttonMode;
-    SpeedSlider _slideSpeed;
+    SpeedSlider _sliderSpeed;
     AutomataState _state{AutomataState::Editing};
     sf::Clock _clockUpdate;
     double _msUpdate{500};
