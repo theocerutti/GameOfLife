@@ -27,12 +27,19 @@ public:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void handleEvent(const sf::Event &event);
     void update(double dt);
+    const AutomataState &getState() const;
+    void setState(const AutomataState &state);
+    void setMsUpdate(double ms);
+    double getMsUpdate() const;
 private:
     CellularArray _cellular;
     sf::Text _infoNbLiving;
     sf::Text _infoSizeMap;
     ButtonMode _buttonMode;
     Slidebar _slideSpeed;
+    AutomataState _state{AutomataState::Editing};
+    sf::Clock _clockUpdate;
+    double _msUpdate{500};
 };
 
 

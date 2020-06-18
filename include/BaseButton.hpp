@@ -33,10 +33,18 @@ public:
     const sf::Texture *getTexture() const;
     sf::Rect<float> getLocalBounds() const;
     sf::Rect<float> getGlobalBounds() const;
+    const sf::Color &getFromColorFade() const;
+    void setFromColorFade(const sf::Color &fromColorFade);
+    const sf::Color &getToColorFade() const;
+    void setToColorFade(const sf::Color &toColorFade);
+    double getFadeSpeed() const;
+    void setFadeSpeed(double fadeSpeed);
 private:
     sf::Texture *_texture{nullptr};
     sf::RectangleShape _shape;
     State _state;
+    sf::Color _fromColorFade{sf::Color::Black};
+    sf::Color _toColorFade{sf::Color::White};
     double _fadeValue{0};
     double _fadeSpeed{0.003};
 };

@@ -6,17 +6,44 @@
 */
 
 #include "ButtonMode.hpp"
+#include "CellularAutomata.hpp"
 
-ButtonMode::ButtonMode(const sf::Vector2f &pos)
+ButtonMode::ButtonMode(CellularAutomata &cellularAutomata, const sf::Vector2f &pos)
     : BaseButton(),
       _startTexture(AssetManager::get().loadTexture("media/images/start.png")),
-      _editTexture(AssetManager::get().loadTexture("media/images/pause.png"))
+      _editTexture(AssetManager::get().loadTexture("media/images/pause.png")),
+      _cellularAutomata(cellularAutomata)
 {
     setPosition(pos);
-    setTexture(_startTexture.get());
+    setTextureFromState(cellularAutomata.getState());
 }
 
 void ButtonMode::onClick()
 {
-    setTexture((getTexture() == _startTexture.get() ? _editTexture.get() : _startTexture.get()));
+    if (getTexture() == _startTexture.get()) {
+        setEditingTexture();
+        _cellularAutomata.setState(AutomataState::Processing);
+    } else {
+        setStartTexture();
+        _cellularAutomata.setState(AutomataState::Editing);
+    }
+}
+
+void ButtonMode::setStartTexture()
+{
+    setTexture(_startTexture.get());
+}
+
+void ButtonMode::setEditingTexture()
+{
+    setTexture(_editTexture.get());
+}
+
+void ButtonMode::setTextureFromState(const AutomataState &state)
+{
+    if (state == AutomataState::Editing) {
+        setStartTexture();
+    } else {
+        setEditingTexture();
+    }
 }

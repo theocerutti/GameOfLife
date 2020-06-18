@@ -10,13 +10,20 @@
 
 #include "BaseButton.hpp"
 
+class CellularAutomata;
+enum class AutomataState : char;
+
 class ButtonMode : public BaseButton {
 public:
-    ButtonMode(const sf::Vector2f &pos);
+    ButtonMode(CellularAutomata &cellularAutomata, const sf::Vector2f &pos);
     void onClick() override;
+    void setStartTexture();
+    void setEditingTexture();
+    void setTextureFromState(const AutomataState &state);
 private:
     std::shared_ptr<sf::Texture> _startTexture;
     std::shared_ptr<sf::Texture> _editTexture;
+    CellularAutomata &_cellularAutomata;
 };
 
 
