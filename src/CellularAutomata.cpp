@@ -9,7 +9,8 @@
 
 CellularAutomata::CellularAutomata(const sf::Vector2u &screenSize, const sf::Vector2u &size)
     : _cellular(screenSize, size),
-      _buttonMode(*this, sf::Vector2f(0, 0))
+      _buttonMode(*this, sf::Vector2f(0, 0)),
+      _sliderSpeed(sf::Vector2f(100, 100))
 {
     std::shared_ptr<sf::Font> font = AssetManager::get().loadFont("media/fonts/monofonto.ttf");
 
@@ -80,6 +81,7 @@ void CellularAutomata::handleEvent(const sf::Event &event)
         setMsUpdate(getMsUpdate() + 1);
     }
     _buttonMode.handleEvent(event);
+    _sliderSpeed.handleEvent(event);
 }
 
 void CellularAutomata::update(double dt)
@@ -91,6 +93,7 @@ void CellularAutomata::update(double dt)
     _buttonMode.update(dt);
     _infoNbLiving.setString("Living Cells: " + std::to_string(_cellular.getNbLivingCells()));
     _infoSizeMap.setString("SizeMap: " + std::to_string(_cellular.getSize().x) + "x" + std::to_string(_cellular.getSize().y));
+    _sliderSpeed.update(dt);
 }
 
 AutomataState CellularAutomata::getState() const

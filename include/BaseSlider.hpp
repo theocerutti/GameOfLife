@@ -16,8 +16,8 @@
 
 class BaseSlider : public sf::Drawable, public sf::Transformable {
 public:
-    BaseSlider() = default;
-    BaseSlider(const sf::Vector2i &pos, sf::Texture *textureBar, sf::Texture *textureProgress);
+    BaseSlider();
+    BaseSlider(const sf::Vector2i &pos, sf::Texture *textureBar, sf::Texture *textureProgress, sf::Font *font);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void update(double dt);
     void handleEvent(const sf::Event &event);
@@ -26,6 +26,12 @@ public:
     void setFromPercent(float percent);
     sf::Rect<float> getLocalBounds() const;
     sf::Rect<float> getGlobalBounds() const;
+    sf::Texture *getTextureProgress() const;
+    void setTextureProgress(sf::Texture *textureProgress);
+    sf::Texture *getTextureBar() const;
+    void setTextureBar(sf::Texture *textureBar);
+    void setFont(sf::Font *font);
+    sf::Font *getFont() const;
     virtual void onSlide() = 0;
 private:
     float _value;
@@ -39,6 +45,7 @@ private:
     sf::RectangleShape _barShape;
     sf::Texture *_textureProgress;
     sf::Texture *_textureBar;
+    sf::Font *_font;
 };
 
 #endif //GAMEOFLIFE_BASESLIDER_HPP

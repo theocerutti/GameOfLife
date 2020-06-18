@@ -17,13 +17,14 @@ namespace Math {
         return a + f * (b - a);
     }
 
-    double inline constexpr clamp2bounds(double b1Min, double b1Max, double x)
+    /*
+     * Calculate the variation rate
+     * Take a value between b1Min and b1Max (b1Min <= x b1Max)
+     * and recalculate x between b2Min and b2Max
+     */
+    double constexpr clamp2bounds(double b1Min, double b1Max, double x, double b2Min, double b2Max)
     {
-        double diff = b1Min;
-        double newMax = b1Max - diff;
-        double newX = x - diff;
-
-        return ((1 / newMax) * newX);
+        return (0);
     }
 
     sf::Color lerpColor(const sf::Color &from, const sf::Color &to, double f);

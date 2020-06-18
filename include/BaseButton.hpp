@@ -42,7 +42,7 @@ public:
 private:
     sf::Texture *_texture{nullptr};
     sf::RectangleShape _shape;
-    State _state;
+    State _state{State::Idle};
     sf::Color _fromColorFade{sf::Color::Black};
     sf::Color _toColorFade{sf::Color::White};
     double _fadeValue{0};
