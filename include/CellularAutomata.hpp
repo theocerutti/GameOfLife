@@ -30,16 +30,16 @@ public:
     AutomataState getState() const;
     void setState(const AutomataState &state);
     void setMsUpdate(double ms);
-    double getMsUpdate() const;
+    float getMsUpdate() const;
+    float *getMsUpdatePtr();
 private:
     CellularArray _cellular;
     sf::Text _infoNbLiving;
     sf::Text _infoSizeMap;
     ButtonMode _buttonMode;
-    SpeedSlider _sliderSpeed;
     AutomataState _state{AutomataState::Editing};
     sf::Clock _clockUpdate;
-    double _msUpdate{500};
+    float _msUpdate{500};
 };
 
 

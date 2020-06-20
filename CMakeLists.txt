@@ -6,7 +6,12 @@ set(BINARY_NAME game_of_life)
 # Append cmake directory to module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include_directories(include)
+include_directories(include include/ImGUI)
+
+# Add OpenGL
+find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIR})
+link_libraries(${OPENGL_LIBRARIES})
 
 # Set sources
 file(GLOB_RECURSE SRCS "src/*.cpp")

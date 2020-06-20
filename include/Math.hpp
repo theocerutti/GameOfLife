@@ -24,7 +24,7 @@ namespace Math {
      */
     double constexpr clamp2bounds(double b1Min, double b1Max, double x, double b2Min, double b2Max)
     {
-        return (0);
+        return (b2Min + (x - b1Min) * ((b2Max - b2Max) / (b1Max - b1Min)));
     }
 
     sf::Color lerpColor(const sf::Color &from, const sf::Color &to, double f);

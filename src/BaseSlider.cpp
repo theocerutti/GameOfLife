@@ -47,7 +47,7 @@ void BaseSlider::update(double dt)
 void BaseSlider::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    target.draw(_barShape, states);
+    //target.draw(_barShape, states);
     target.draw(_progressShape, states);
     target.draw(_minText, states);
     target.draw(_maxText, states);
@@ -83,9 +83,9 @@ void BaseSlider::setFromValue(float value)
 void BaseSlider::setFromPercent(float percent)
 {
     percent = Math::clamp(percent, 0, 100);
-    sf::IntRect rect = _barShape.getTextureRect();
+    sf::IntRect rect = _progressShape.getTextureRect();
 
-    rect.width /= (percent - _minValue) / (_maxValue - _minValue);
+    rect.left = rect.width - (rect.width * ((percent - _minValue) / (_maxValue - _minValue)));
     _percent = percent;
     _progressShape.setTextureRect(rect);
 }
@@ -98,7 +98,7 @@ sf::Texture *BaseSlider::getTextureProgress() const
 void BaseSlider::setTextureProgress(sf::Texture *textureProgress)
 {
     _textureProgress = textureProgress;
-    _progressShape.setTexture(_textureProgress);
+    _progressShape.setTexture(_textureProgress, true);
     _progressShape.setSize(sf::Vector2f(_textureProgress->getSize().x, _textureProgress->getSize().y));
 }
 
@@ -110,7 +110,7 @@ sf::Texture *BaseSlider::getTextureBar() const
 void BaseSlider::setTextureBar(sf::Texture *textureBar)
 {
     _textureBar = textureBar;
-    _barShape.setTexture(_textureBar);
+    _barShape.setTexture(_textureBar, true);
     _barShape.setSize(sf::Vector2f(_textureBar->getSize().x, _textureBar->getSize().y));
 }
 
